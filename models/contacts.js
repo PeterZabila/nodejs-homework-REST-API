@@ -51,13 +51,7 @@ const addContact = async (body) => {
   try {
     const data = await fs.readFile(contactsPath);
     const parsed = JSON.parse(data);
-    if (
-      parsed.find(
-        (contact) => contact.name.toLowerCase() === name.toLowerCase()
-      )
-    ) {
-      return `Contact with name ${name} is already in the contact list`;
-    }
+    
     if (parsed.find((contact) => contact.email === email)) {
       return `Contact with email ${email} is already in the contact list`;
     }
