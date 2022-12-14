@@ -7,8 +7,6 @@ const connectMongo = async () => {
     return mongoose.connect(DB_HOST)
 };
 
-console.log((DB_HOST).toString)
-
 module.exports = {
     connectMongo,
 }

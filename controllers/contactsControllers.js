@@ -1,5 +1,5 @@
 const { RequestError } = require("../helpers");
-const Contact = require("../models/contact");
+const {Contact} = require("../models/contact");
 
 const getAll = async(req, res) => {
     const contacts = await Contact.find({});

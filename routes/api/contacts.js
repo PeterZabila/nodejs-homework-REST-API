@@ -1,19 +1,8 @@
 const express = require("express");
-const Joi = require("joi");
-
-const {validateBody, isValidId} = require("../../middlewares");
 const router = express.Router();
 
-const updateFavouriteSchema = Joi.object({
-  favourite: Joi.boolean()
-})
-
-const schema = Joi.object({
-  name: Joi.string().required(),
-  email: Joi.string().required(),
-  phone: Joi.string().required(),
-});
-
+const {validateBody, isValidId} = require("../../middlewares");
+const {updateFavouriteSchema, schema} = require("../../models/contact")
 const {ctrlWrapper} = require("../../helpers");
 
 const {
