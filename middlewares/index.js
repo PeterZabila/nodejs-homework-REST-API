@@ -1,5 +1,9 @@
-const validateBody = require("./validateBody")
+const validateBody = require("./validateBody");
+const isValidId = require("./isValidId");
+const handleSaveErrors = require("./handleSaveError")
 
 module.exports = {
-    validateBody
+    validateBody,
+    isValidId,
+    handleSaveErrors
 };
