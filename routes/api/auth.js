@@ -1,4 +1,5 @@
-const express = require("express")
+const express = require("express");
+const router = express.Router()
 
 const ctrl = require("../../controllers/auth")
 const {ctrlWrapper} = require("../../helpers")
@@ -7,8 +8,6 @@ const {validateBody} = require("../../middlewares")
 const {userJoiSchema} = require("../../models/user")
 
 const {authenticate} = require("../../middlewares")
-
-const router = express.Router()
 
 router.post("/signup", validateBody(userJoiSchema), ctrlWrapper(ctrl.register))
 

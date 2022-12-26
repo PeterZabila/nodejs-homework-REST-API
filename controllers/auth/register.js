@@ -7,10 +7,10 @@ const {RequestError} = require("../../helpers")
 const register = async(req, res) => {
     const {email, password} = req.body;
 
-    const user = User.findOne({email});
+    const candidate = await User.findOne({email});
 
-        if(user) {
-            throw RequestError(409, "Email is already in use")
+        if(candidate) {
+            throw RequestError(409, `Email ${email} is already in use`)
         }
     
     const hashPassword = await bcrypt.hash(password, 10)
