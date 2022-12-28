@@ -1,33 +1,33 @@
-const bcrypt = require("bcrypt")
-const jwt = require("jsonwebtoken")
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
-const {User} = require("../../models/user")
+const { User } = require("../../models/user");
 
-const {RequestError} = require("../../helpers")
+const { RequestError } = require("../../helpers");
 
-const {SECRET_KEY} = process.env;
+const { SECRET_KEY } = process.env;
 
-const login = async(req, res) => {
-    const {email, password} = req.body;
-    const user = await User.findOne({email});
-        if(!user) {
-            throw RequestError(401, "Email or password invalid")
-        }
+const login = async (req, res) => {
+  const { email, password } = req.body;
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw RequestError(401, "Email or password invalid");
+  }
 
-    const passwordCompare = await bcrypt.compare(password, user.password)
-        if(!passwordCompare) {
-            throw RequestError(401, "Email or password invalid")
-        }
-    
-    const payload = {
-        id: user._id,
-    }
+  const passwordCompare = await bcrypt.compare(password, user.password);
+  if (!passwordCompare) {
+    throw RequestError(401, "Email or password invalid");
+  }
 
-    const token = jwt.sign(payload, SECRET_KEY, {expiresIn: "3h"})
+  const payload = {
+    id: user._id,
+  };
 
-    res.json({
-        token,
-    })
-}
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "3h" });
+
+  res.json({
+    token,
+  });
+};
 
 module.exports = login;

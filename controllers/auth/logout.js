@@ -1,19 +1,18 @@
 const { RequestError } = require("../../helpers");
-const {User} = require("../../models/user")
+const { User } = require("../../models/user");
 
-const logout = async(req, res) => {
-    const {_id} = req.user;
+const logout = async (req, res) => {
+  const { _id } = req.user;
 
-    if(!_id) {
-        throw RequestError(401, "Not authorized")
-    }
+  if (!_id) {
+    throw RequestError(401, "Not authorized");
+  }
 
-    await User.findByIdAndUpdate(_id, {token: ""});
+  await User.findByIdAndUpdate(_id, { token: "" });
 
-    res.json({
-        message: "Bearer {{token}}"
-    })
-
-}
+  res.json({
+    message: "Successfully logged out",
+  });
+};
 
 module.exports = logout;
