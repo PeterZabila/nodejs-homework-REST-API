@@ -9,6 +9,7 @@ const { userJoiSchema } = require("../../models/user");
 
 const { authenticate } = require("../../middlewares");
 
+router.get("/", ctrlWrapper(ctrl.getAllUsers))
 router.post("/signup", validateBody(userJoiSchema), ctrlWrapper(ctrl.register));
 router.post("/login", validateBody(userJoiSchema), ctrlWrapper(ctrl.login));
 router.get("/current", authenticate, ctrlWrapper(ctrl.getCurrent));
