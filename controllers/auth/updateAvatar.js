@@ -16,7 +16,9 @@ const updateAvatar = async(req, res) => {
     Jimp.read(avatarURL, (err, img) => {
         if(err) 
             throw err;
-        img.resize(250, 250);
+        img
+            .resize(250, 250)
+            .write(`resized${filename}`);
     })
     await User.findByIdAndUpdate(_id, {avatarURL});
 
