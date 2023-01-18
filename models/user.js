@@ -5,6 +5,14 @@ const { handleMongooseError } = require("../helpers");
 const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 const userSchema = new Schema({
+  verify: {
+    type: Boolean,
+    default: false,
+  },
+  verificationToken: {
+    type: String,
+    required: [true, 'Verify token is required'],
+  },
   password: {
     type: String,
     required: [true, "Password is required"],
@@ -36,9 +44,14 @@ const userJoiSchema = Joi.object({
   email: Joi.string().pattern(emailRegexp).required(),
 });
 
+const emailSchema = Joi.object({
+  email: Joi.string().pattern(emailRegexp).required(),
+})
+
 const User = model("user", userSchema);
 
 module.exports = {
   userJoiSchema,
   User,
+  emailSchema,
 };
