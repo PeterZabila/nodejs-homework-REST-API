@@ -1,29 +1,31 @@
-const {User} = require("../../models/user");
+const { User } = require("../../models/user");
 
-const {RequestError, sendEmail} = require("../../helpers");
+const { RequestError, sendEmail } = require("../../helpers");
 
-const resendVerifyEmail = async(req, res) => {
-    const {email} = req.body;
-    const user = await User.findOne({email});
-    if(!user) {
-        throw RequestError(400, "missing required field email");
-    }
+const {BASE_URL} = process.env;
 
-    if(user.verify) {
-        throw RequestError(400, "Verification has already been passed")
-    }
+const resendVerifyEmail = async (req, res) => {
+  const { email } = req.body;
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw RequestError(400, "missing required field email");
+  }
 
-    const verifyEmail = {
-        to: email,
-        subject: "Verify you email",
-        html: `<a target="_blank" href="${BASE_URL}/api/auth/verify/${user.verificationCode}">Click verify email</a>`
-    }
+  if (user.verify) {
+    throw RequestError(400, "Verification has already been passed");
+  }
 
-    await sendEmail(verifyEmail);
+  const verifyEmail = {
+    to: email,
+    subject: "Verify you email",
+    html: `<a target="_blank" href="${BASE_URL}/api/auth/verify/${user.verificationToken}">Click verify email</a>`,
+  };
 
-    res.json({
-        message: "Verify email resend"
-    })
-}
+  await sendEmail(verifyEmail);
+
+  res.json({
+    message: "Verify email resend",
+  });
+};
 
 module.exports = resendVerifyEmail;
